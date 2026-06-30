@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+
+    function underFiveMb() {
+      return request.resource.size < 5 * 1024 * 1024;
+    }
+
+    match /product-images/{uid}/{fileName} {
+      allow read: if true;
+      allow write: if signedIn()
+        && request.auth.uid == uid
+        && isImage()
+        && underFiveMb();
+    }
+
+    match /store-assets/{uid}/{fileName} {
+      allow read: if true;
+      allow write: if signedIn()
+        && request.auth.uid == uid
+        && isImage()
+        && underFiveMb();
+    }
+
+    match /payment-proofs/{storeId}/{orderId}/{fileName} {
+      allow read: if signedIn();
+      allow create: if isImage() && underFiveMb();
+      allow update, delete: if false;
+    }
+  }
+}

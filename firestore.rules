@@ -1,0 +1,114 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid));
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && userDoc(request.auth.uid).data.role == 'admin'
+        && userDoc(request.auth.uid).data.status == 'active';
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function keepsSystemUserFields() {
+      return request.resource.data.role == resource.data.role
+        && request.resource.data.plan == resource.data.plan
+        && request.resource.data.status == resource.data.status
+        && request.resource.data.uid == resource.data.uid;
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.role == 'seller'
+        && request.resource.data.plan == 'free'
+        && request.resource.data.status == 'active';
+      allow update: if isAdmin() || (isOwner(uid) && keepsSystemUserFields());
+      allow delete: if isAdmin();
+    }
+
+    match /stores/{storeId} {
+      allow read: if resource.data.status == 'published' || isOwner(resource.data.ownerId) || isAdmin();
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.status in ['draft', 'published'];
+      allow update: if isAdmin()
+        || (
+          isOwner(resource.data.ownerId)
+          && request.resource.data.ownerId == resource.data.ownerId
+        );
+      allow delete: if isAdmin() || isOwner(resource.data.ownerId);
+    }
+
+    match /products/{productId} {
+      allow read: if resource.data.status == 'active' || isOwner(resource.data.ownerId) || isAdmin();
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.price is number
+        && request.resource.data.price >= 0
+        && request.resource.data.status in ['active', 'draft'];
+      allow update: if isAdmin()
+        || (
+          isOwner(resource.data.ownerId)
+          && request.resource.data.ownerId == resource.data.ownerId
+        );
+      allow delete: if isAdmin() || isOwner(resource.data.ownerId);
+    }
+
+    match /orders/{orderId} {
+      allow read: if isAdmin() || isOwner(resource.data.sellerId);
+      allow create: if request.resource.data.sellerId is string
+        && request.resource.data.storeId is string
+        && request.resource.data.productId is string
+        && request.resource.data.buyerName is string
+        && request.resource.data.buyerPhone is string
+        && request.resource.data.quantity is number
+        && request.resource.data.quantity >= 1
+        && request.resource.data.total is number
+        && request.resource.data.total >= 0
+        && request.resource.data.status == 'waiting_payment_review';
+      allow update: if isAdmin()
+        || (
+          isOwner(resource.data.sellerId)
+          && request.resource.data.sellerId == resource.data.sellerId
+          && request.resource.data.total == resource.data.total
+        );
+      allow delete: if isAdmin();
+    }
+
+    match /customers/{customerId} {
+      allow read, update, delete: if isAdmin() || isOwner(resource.data.sellerId);
+      allow create: if signedIn() && request.resource.data.sellerId == request.auth.uid;
+    }
+
+    match /premiumRequests/{requestId} {
+      allow read: if isAdmin() || isOwner(resource.data.sellerId);
+      allow create: if signedIn()
+        && request.resource.data.sellerId == request.auth.uid
+        && request.resource.data.status == 'pending';
+      allow update, delete: if isAdmin();
+    }
+
+    match /appSettings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if signedIn();
+      allow update, delete: if false;
+    }
+  }
+}

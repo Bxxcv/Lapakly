@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, BellRing, CheckCircle2, LayoutDashboard, MessageSquareText, MousePointerClick, PackageCheck, Sparkles, Store, Users, WalletCards } from 'lucide-react';
+import { ArrowRight, BarChart3, CheckCircle2, LayoutDashboard, MessageCircle, PackageCheck, ReceiptText, Store, Users } from 'lucide-react';
 import { BrandLogo } from '../components/BrandLogo.jsx';
-import { MobilePreview } from '../components/MobilePreview.jsx';
 
 const features = [
-  ['Live preview', 'Edit toko sambil lihat tampilan HP secara langsung.', LayoutDashboard],
-  ['Order inbox', 'Pesanan masuk seperti inbox, cepat dibaca dan diproses.', BellRing],
-  ['Customer list', 'Simpan pelanggan, nomor WA, dan riwayat pembelian.', Users],
-  ['Template usaha', 'Mode makanan, fashion, jasa, dan produk digital.', Store]
+  ['Toko siap share', 'Link toko, profil, katalog, dan tombol chat dalam satu halaman.', Store],
+  ['Order inbox', 'Pesanan masuk rapi, lengkap dengan status dan kontak pembeli.', ReceiptText],
+  ['Upload gambar', 'Foto produk, banner, QRIS, dan bukti bayar lewat Cloudinary.', PackageCheck],
+  ['Data pelanggan', 'Nomor WA dan riwayat pembelian tidak tercecer di chat.', Users]
 ];
 
 const storeTypes = [
@@ -30,72 +29,89 @@ const storeTypes = [
 
 export default function Landing() {
   return (
-    <div className="landing-page">
-      <header className="site-header">
-        <Link to="/" className="site-header__brand"><BrandLogo /></Link>
-        <nav>
+    <div className="home-page">
+      <header className="home-header">
+        <Link to="/" className="home-header__brand"><BrandLogo /></Link>
+        <nav className="home-nav">
           <a href="#fitur">Fitur</a>
-          <a href="#alur">Alur</a>
+          <a href="#contoh">Contoh toko</a>
           <a href="#harga">Harga</a>
         </nav>
-        <Link className="btn btn--dark" to="/register">Mulai gratis</Link>
+        <Link className="home-header__cta" to="/register">Mulai gratis</Link>
       </header>
 
       <main>
-        <section className="hero section">
-          <div className="hero__copy">
-            <span className="eyebrow"><Sparkles size={16} /> Dibuat buat seller kecil yang serius jualan</span>
-            <h1>Toko kecil, kelihatan siap jualan.</h1>
+        <section className="home-hero">
+          <div className="home-hero__copy">
+            <span className="home-label">SaaS toko-link untuk UMKM</span>
+            <h1>Jualan dari satu link, tapi rasanya seperti punya toko sendiri.</h1>
             <p>
-              Lapakly bantu lu bikin halaman jualan, katalog, order, dan data pelanggan dalam satu dashboard yang rapi.
-              Bukan cuma link bio, tapi ruang kerja jualan harian.
+              Lapakly dibuat untuk seller kecil yang butuh katalog rapi, order manual,
+              QRIS, dan data pelanggan tanpa sistem yang bikin pusing.
             </p>
-            <div className="hero__actions">
+            <div className="home-actions">
               <Link className="btn btn--primary" to="/register">Bikin toko <ArrowRight size={18} /></Link>
-              <Link className="btn btn--ghost" to="/u/kopi-sore">Lihat demo</Link>
+              <Link className="btn btn--ghost" to="/u/kopi-sore">Lihat toko demo</Link>
             </div>
-            <div className="hero__checks">
+            <div className="home-checks">
               <span><CheckCircle2 size={17} /> Tanpa coding</span>
-              <span><CheckCircle2 size={17} /> Bisa QRIS manual</span>
-              <span><CheckCircle2 size={17} /> Dashboard realtime</span>
-            </div>
-            <div className="hero-proof">
-              <div><strong>4 menit</strong><span>setup toko demo</span></div>
-              <div><strong>1 link</strong><span>katalog + order</span></div>
-              <div><strong>0 ribet</strong><span>buat seller awam</span></div>
+              <span><CheckCircle2 size={17} /> QRIS manual</span>
+              <span><CheckCircle2 size={17} /> Upload Cloudinary</span>
             </div>
           </div>
-          <div className="hero__visual">
-            <MobilePreview />
+          <div className="home-hero__visual">
             <img
-              className="hero-photo hero-photo--one"
-              src="https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=600&q=80"
+              className="home-photo-main"
+              src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1100&q=80"
               alt=""
             />
-            <img
-              className="hero-photo hero-photo--two"
-              src="https://images.unsplash.com/photo-1556741533-6e6a62bd8b49?auto=format&fit=crop&w=600&q=80"
-              alt=""
-            />
-            <div className="floating-note floating-note--top">
-              <MessageSquareText size={18} />
-              <span>Order baru masuk</span>
-            </div>
-            <div className="floating-note floating-note--bottom">
-              <strong>82%</strong>
-              <span>Store health</span>
+            <div className="home-dashboard-card">
+              <div>
+                <span>Order hari ini</span>
+                <strong>14</strong>
+              </div>
+              <div>
+                <span>Produk dilihat</span>
+                <strong>128</strong>
+              </div>
+              <div>
+                <span>Status toko</span>
+                <strong>Aktif</strong>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section store-type-section">
-          <div className="section-title">
-            <span>Template nyata</span>
-            <h2>Mulai dari jenis usaha, bukan halaman kosong.</h2>
+        <section className="home-section home-strip">
+          <div><strong>4 menit</strong><span>setup toko demo</span></div>
+          <div><strong>1 link</strong><span>profil, katalog, order</span></div>
+          <div><strong>0 kartu</strong><span>tanpa Firebase Storage</span></div>
+        </section>
+
+        <section className="home-section" id="fitur">
+          <div className="home-section__head">
+            <span>Fitur inti</span>
+            <h2>Yang dipakai seller tiap hari.</h2>
           </div>
-          <div className="store-type-grid">
+          <div className="home-feature-grid">
+            {features.map(([title, description, Icon]) => (
+              <article className="home-feature" key={title}>
+                <Icon size={22} />
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="home-section" id="contoh">
+          <div className="home-section__head">
+            <span>Contoh toko</span>
+            <h2>Mulai dari jenis usaha yang jelas.</h2>
+          </div>
+          <div className="home-store-grid">
             {storeTypes.map((item) => (
-              <article className="store-type-card" key={item.title}>
+              <article className="home-store-card" key={item.title}>
                 <img src={item.image} alt="" />
                 <div>
                   <h3>{item.title}</h3>
@@ -106,73 +122,63 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="section feature-grid" id="fitur">
-          <div className="section-title">
-            <span>Yang beda</span>
-            <h2>Lebih dari katalog biasa.</h2>
-          </div>
-          <div className="cards-grid">
-            {features.map(([title, description, Icon]) => (
-              <article className="feature-card" key={title}>
-                <Icon size={22} />
-                <h3>{title}</h3>
-                <p>{description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section ops-section">
-          <div className="ops-copy">
-            <span className="eyebrow">Workspace seller</span>
-            <h2>Order, produk, dan pelanggan kebaca dalam satu layar.</h2>
-            <p>Seller kecil gak butuh sistem yang kelihatan mewah tapi bikin bingung. Lapakly dibuat padat, cepat, dan jelas.</p>
-          </div>
-          <div className="ops-board">
-            <div><MousePointerClick size={20} /><strong>Produk dilihat</strong><span>128 klik</span></div>
-            <div><PackageCheck size={20} /><strong>Order diproses</strong><span>14 hari ini</span></div>
-            <div><WalletCards size={20} /><strong>QRIS manual</strong><span>bukti tersimpan</span></div>
-          </div>
-        </section>
-
-        <section className="section flow-section" id="alur">
-          <div className="section-title">
-            <span>Alur kerja</span>
-            <h2>Dari setup sampai order, jalannya pendek.</h2>
-          </div>
-          <div className="flow-list">
-            {['Pilih tipe toko', 'Isi profil dan produk', 'Publish link jualan', 'Proses order dari dashboard'].map((item, index) => (
-              <div className="flow-item" key={item}>
-                <strong>{index + 1}</strong>
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="section pricing" id="harga">
+        <section className="home-section home-workflow">
           <div>
-            <span className="eyebrow">MVP pricing</span>
+            <span className="home-label">Cara kerjanya</span>
+            <h2>Dashboard-nya dibuat buat kerja, bukan pajangan.</h2>
+            <p>Seller tambah produk, publish link, terima order, lalu follow-up pembeli lewat WhatsApp.</p>
+          </div>
+          <div className="home-workflow__list">
+            <div><LayoutDashboard size={20} /><span>Setup profil toko</span></div>
+            <div><PackageCheck size={20} /><span>Tambah produk dan foto</span></div>
+            <div><MessageCircle size={20} /><span>Terima order dan chat pembeli</span></div>
+            <div><BarChart3 size={20} /><span>Lihat performa toko</span></div>
+          </div>
+        </section>
+
+        <section className="home-section home-pricing" id="harga">
+          <div>
+            <span className="home-label">Harga awal</span>
             <h2>Mulai gratis, upgrade kalau toko mulai ramai.</h2>
           </div>
-          <div className="price-card">
+          <div className="home-price-card">
             <span>Free</span>
             <strong>Rp0</strong>
-            <p>5 produk, link toko, order manual, dan preview mobile.</p>
+            <p>5 produk, link toko, order manual.</p>
             <Link className="btn btn--primary" to="/register">Coba dulu</Link>
           </div>
-          <div className="price-card price-card--highlight">
+          <div className="home-price-card home-price-card--dark">
             <span>Pro</span>
             <strong>Rp49rb/bln</strong>
-            <p>Produk lebih banyak, analytics, customer list, template premium, export order.</p>
+            <p>Produk lebih banyak, analytics, customer list, export order.</p>
             <Link className="btn btn--dark" to="/register">Siapkan Pro</Link>
           </div>
         </section>
       </main>
 
-      <footer className="site-footer">
-        <BrandLogo />
-        <p>Satu tempat buat jualan lebih rapi.</p>
+      <footer className="home-footer">
+        <div>
+          <BrandLogo />
+          <p>Satu tempat buat bikin toko kecil terlihat siap jualan.</p>
+        </div>
+        <div>
+          <strong>Produk</strong>
+          <a href="#fitur">Fitur</a>
+          <a href="#contoh">Contoh toko</a>
+          <a href="#harga">Harga</a>
+        </div>
+        <div>
+          <strong>Untuk seller</strong>
+          <span>Makanan</span>
+          <span>Fashion</span>
+          <span>Jasa</span>
+        </div>
+        <div>
+          <strong>Kontak</strong>
+          <span>WhatsApp admin</span>
+          <span>Instagram</span>
+          <span>Bantuan akun</span>
+        </div>
       </footer>
     </div>
   );

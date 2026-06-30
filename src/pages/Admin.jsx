@@ -33,6 +33,14 @@ export default function Admin() {
           <span>Query admin wajib pagination.</span>
         </div>
       </section>
+      <section className="panel admin-visual">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80" alt="" />
+        <div>
+          <span className="panel-kicker">Operator view</span>
+          <h2>Admin cukup lihat yang perlu ditindak.</h2>
+          <p>Request premium, laporan seller, dan status platform dibuat ringkas supaya gak jadi panel yang ramai tanpa arah.</p>
+        </div>
+      </section>
     </AppShell>
   );
 }

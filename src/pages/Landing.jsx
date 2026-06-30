@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, BellRing, CheckCircle2, LayoutDashboard, MessageSquareText, Sparkles, Store, Users } from 'lucide-react';
+import { ArrowRight, BellRing, CheckCircle2, LayoutDashboard, MessageSquareText, MousePointerClick, PackageCheck, Sparkles, Store, Users, WalletCards } from 'lucide-react';
 import { BrandLogo } from '../components/BrandLogo.jsx';
 import { MobilePreview } from '../components/MobilePreview.jsx';
 
@@ -8,6 +8,24 @@ const features = [
   ['Order inbox', 'Pesanan masuk seperti inbox, cepat dibaca dan diproses.', BellRing],
   ['Customer list', 'Simpan pelanggan, nomor WA, dan riwayat pembelian.', Users],
   ['Template usaha', 'Mode makanan, fashion, jasa, dan produk digital.', Store]
+];
+
+const storeTypes = [
+  {
+    title: 'Kedai kopi',
+    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=900&q=80',
+    note: 'Menu, QRIS, pickup, preorder.'
+  },
+  {
+    title: 'Fashion lokal',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80',
+    note: 'Katalog varian, stok, chat WA.'
+  },
+  {
+    title: 'Jasa harian',
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=80',
+    note: 'Booking, brief, invoice manual.'
+  }
 ];
 
 export default function Landing() {
@@ -41,9 +59,24 @@ export default function Landing() {
               <span><CheckCircle2 size={17} /> Bisa QRIS manual</span>
               <span><CheckCircle2 size={17} /> Dashboard realtime</span>
             </div>
+            <div className="hero-proof">
+              <div><strong>4 menit</strong><span>setup toko demo</span></div>
+              <div><strong>1 link</strong><span>katalog + order</span></div>
+              <div><strong>0 ribet</strong><span>buat seller awam</span></div>
+            </div>
           </div>
           <div className="hero__visual">
             <MobilePreview />
+            <img
+              className="hero-photo hero-photo--one"
+              src="https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=600&q=80"
+              alt=""
+            />
+            <img
+              className="hero-photo hero-photo--two"
+              src="https://images.unsplash.com/photo-1556741533-6e6a62bd8b49?auto=format&fit=crop&w=600&q=80"
+              alt=""
+            />
             <div className="floating-note floating-note--top">
               <MessageSquareText size={18} />
               <span>Order baru masuk</span>
@@ -52,6 +85,24 @@ export default function Landing() {
               <strong>82%</strong>
               <span>Store health</span>
             </div>
+          </div>
+        </section>
+
+        <section className="section store-type-section">
+          <div className="section-title">
+            <span>Template nyata</span>
+            <h2>Mulai dari jenis usaha, bukan halaman kosong.</h2>
+          </div>
+          <div className="store-type-grid">
+            {storeTypes.map((item) => (
+              <article className="store-type-card" key={item.title}>
+                <img src={item.image} alt="" />
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.note}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -68,6 +119,19 @@ export default function Landing() {
                 <p>{description}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="section ops-section">
+          <div className="ops-copy">
+            <span className="eyebrow">Workspace seller</span>
+            <h2>Order, produk, dan pelanggan kebaca dalam satu layar.</h2>
+            <p>Seller kecil gak butuh sistem yang kelihatan mewah tapi bikin bingung. Lapakly dibuat padat, cepat, dan jelas.</p>
+          </div>
+          <div className="ops-board">
+            <div><MousePointerClick size={20} /><strong>Produk dilihat</strong><span>128 klik</span></div>
+            <div><PackageCheck size={20} /><strong>Order diproses</strong><span>14 hari ini</span></div>
+            <div><WalletCards size={20} /><strong>QRIS manual</strong><span>bukti tersimpan</span></div>
           </div>
         </section>
 

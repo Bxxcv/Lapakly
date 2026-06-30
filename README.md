@@ -8,6 +8,7 @@ Lapakly adalah rebuild SaaS toko-link untuk seller kecil. Fokusnya bukan cuma li
 - Firebase Auth
 - Firestore Database
 - Firebase Storage
+- Cloudinary untuk upload gambar
 - Firestore Security Rules
 - Deploy dari GitHub ke Ryaze Portal, pilih framework `React JS`
 
@@ -31,6 +32,8 @@ VITE_FIREBASE_PROJECT_ID=
 VITE_FIREBASE_STORAGE_BUCKET=
 VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
+VITE_CLOUDINARY_CLOUD_NAME=
+VITE_CLOUDINARY_UPLOAD_PRESET=
 ```
 
 Di Vite, env frontend harus diawali `VITE_` dan dibaca memakai `import.meta.env`.
@@ -46,6 +49,17 @@ Di Vite, env frontend harus diawali `VITE_` dan dibaca memakai `import.meta.env`
 7. Framework: `React JS`.
 8. Isi environment variable Firebase di menu env Ryaze.
 9. Deploy.
+
+## Cloudinary
+
+Ambil `cloud_name` dari dashboard Cloudinary. Buat unsigned upload preset dari menu `Upload` > `Upload presets`, lalu isi env:
+
+```env
+VITE_CLOUDINARY_CLOUD_NAME=dxq06iq2r
+VITE_CLOUDINARY_UPLOAD_PRESET=nama_preset_unsigned
+```
+
+Jangan masukkan `API Secret` ke frontend.
 
 ## Firebase Yang Perlu Dibuat
 

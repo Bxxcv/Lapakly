@@ -9,10 +9,17 @@ export default function Storefront() {
   return (
     <main className="public-store">
       <section className="public-store__hero">
-        <div className="public-store__avatar"><ShoppingBag size={28} /></div>
-        <h1>{store.name}</h1>
-        <p>{store.headline}</p>
-        <a className="btn btn--dark" href={`https://wa.me/${store.whatsapp}`}><MessageCircle size={17} /> Chat toko</a>
+        <div>
+          <div className="public-store__avatar"><ShoppingBag size={28} /></div>
+          <h1>{store.name}</h1>
+          <p>{store.headline}</p>
+          <a className="btn btn--dark" href={`https://wa.me/${store.whatsapp}`}><MessageCircle size={17} /> Chat toko</a>
+        </div>
+        <img
+          className="public-store__cover"
+          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80"
+          alt=""
+        />
       </section>
       <section className="public-products">
         {demoProducts.map((product) => (

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, MessageCircle, Plus, TrendingUp, Users } from 'lucide-react';
+import { ArrowUpRight, ImagePlus, MessageCircle, Plus, Send, TrendingUp, Users } from 'lucide-react';
 import { MobilePreview } from '../components/MobilePreview.jsx';
 import { StatusBadge } from '../components/StatusBadge.jsx';
 import { AppShell } from '../layouts/AppShell.jsx';
@@ -49,6 +49,20 @@ export default function Dashboard() {
                 <b>{formatCurrency(order.total)}</b>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="panel action-panel">
+          <div className="panel-head">
+            <div>
+              <span className="panel-kicker">Aksi cepat</span>
+              <h2>Beresin toko hari ini</h2>
+            </div>
+          </div>
+          <div className="quick-actions">
+            <Link to="/products"><Plus size={18} /> Tambah produk</Link>
+            <Link to="/products"><ImagePlus size={18} /> Upload foto</Link>
+            <Link to="/u/kopi-sore"><Send size={18} /> Share toko</Link>
           </div>
         </section>
 
